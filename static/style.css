@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    list-style-type: none;
+}
+
+body{
+    background-color: rgba(157, 207, 207, 0.707);
+}
+
+ul{
+    display: flex;
+    margin: 50px;
+}
+
+ul li{
+    margin: 0 auto;
+}
+
+ul li a{
+    font-size: 30px;
+    color: black;
+}
+
