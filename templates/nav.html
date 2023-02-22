@@ -1,22 +1,19 @@
 
 
 <div class= "nav_container">
-    
     <div class = "logo">
         <a href="index.html">
             <img src="/static/img/logo.png">
         </a>
     </div>
-
-<div class = "navigation">
-<nav>
-    <ul>
-        <li><a href="{{ url_for("index")}}">Home</a></li>
-        <li><a href="{{ url_for("generate_cv")}}">Create Resume</a></li>
-        <li><a href="{{ url_for("preview")}}">Preview</a></li>
-        <li><a href="{{ url_for("index")}}">Log in</a></li>
-   </ul> 
-</nav>
-</div>
-
+    <div class="navigation">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index')}}">Home</a></li>
+                <li><a href="{{ url_for('generate_cv')}}">Create Resume</a></li>
+                <li><a href="{{ url_for('preview')}}">Preview</a></li>
+                <li><a href="{{ url_for('admin.index')}}">Log in</a></li>
+           </ul>
+        </nav>
+    </div>
 </div>
