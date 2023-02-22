@@ -1,0 +1,12 @@
+# Ignore all virtual environment files
+/venv
+
+# Ignore all .pyc files
+**/*.pyc
+# Ignore all IDE files
+.idea
+
+# ignore all db files in every folder
+**/*.db
+
+
