@@ -2,7 +2,7 @@ import sqlite3
 
 class CRUD:
     def __init__(self):
-        self.con = sqlite3.connect("C:\Users\HP\Desktop\UNILAB-PYTHON\Final Project\CV generator - 1\cv_builder.db")
+        self.con = sqlite3.connect("cv_builder.db")
         self.cur = self.con.cursor()
         
     
@@ -11,29 +11,79 @@ class CRUD:
         query + f"("
         for i in array:
             query += f"{i},"
-        query += ");"
-        query -= ','
-        self.cur.execute()
+        query = query[:-1]
+        query += ");" 
+        print(query)
+        self.cur.execute(query)
         
     
-    def insert(self, table):
-        ins = self.cur.execute(f"insert into {table} values")
-        return ins.fetchall()
+    def insert(self, table_name, **args):
+        stmt = ""
+        stmt += f"INSERT INRO{table_name} VALUES ("
+        
+        for item in args:
+            stmt += f""" '{item}' , """
+            
+        stmt = stmt[:-1]
+        stmt += ");"
+        print(stmt)
+        
+        self.cur.execute(stmt)
+        self.con.commit()
+        
     
-    def select(self, table_name,  where=[] ):
-        res = self.cur.execute(f"select * from {table_name} where{where}")
+    def select(self, table_name,  where=[]):
+        if not where:
+            stmt = f"select * from {table_name}"
+        else:
+           stmt = f"select * from {table_name} where {where}"
+       
+        print(stmt)
+        
+        res = self.cur.execute(stmt)
         return res.fetchall()
-    
-    
-    def update(self, table_name, where):
-        update = self.cur.execute(f"update * {table_name} set where {where}")
-        return update.fetchall()
         
-    def delete(self, table_name):
-        delete = self.cur.execute(f'delete from {table_name} where t1 = ?')
-        return delete.fetchall()
-    
-    
+        
+    def update(self, table_name, datum, condition):
+        stmt = f"UPDATE {table_name} SET"
+        for k, v in datum.items():
+            stmt += f"{k} = '{v}' , "
+        stmt = stmt[:-1]
+        
+        stmt += "where"
+        for k, v in condition.items():
+            stmt += f"{k} = '{v}' , "
+        stmt = stmt[:-1]
+        stmt += ";"
+        
+        print(stmt)
+        self.cur.execute(stmt)
+        self.con.commit()
+            
+        
+    def delete(self, table_name, column, value):
+       stmt = ""
+       stmt += f"DELETE FROM {table_name} where {column} = '{value}';"
+       self.cur.execute(stmt)
+       self.con.commit()
+       
+       
     
 db = CRUD()
 db.create_table("user", ["id",'name', "surname", "email"])
+
+
+
+
+
+
+db.insert("user", 1, "John", "Doe", "johnDoe@gmail.com")
+
+
+data = {"name": "Jouaqin", "email": "Jouaqin@gmail.com"}
+where = {"id": '1'}
+db.update("user", data, where)
+
+db.delete("user", "id", "1")
+
+print(db.select("user", "id, = '1'"))

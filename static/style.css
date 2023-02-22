@@ -7,20 +7,81 @@
 }
 
 body{
-    background-color: rgba(157, 207, 207, 0.707);
+    background-color: #9fbfce;
 }
+
+.nav_container{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+
+}
+
 
 ul{
     display: flex;
-    margin: 50px;
 }
 
 ul li{
-    margin: 0 auto;
+    margin: 45px 100px;
 }
 
 ul li a{
-    font-size: 30px;
-    color: black;
+    font-size: 22px;
+    color: rgb(36, 36, 36);
 }
+
+ul li a:hover{
+    color: #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.logo img{
+    width: 80px;
+    height: 80px;
+    margin: 10px 40px;
+}
+
+
+
+
+/* generate cv css */
+
+h2{
+    text-align: center;
+    padding: 16px;
+}
+
+form{
+    display: grid;
+    place-items: center;
+}
+
+form input, textarea, select {
+    
+    width: 40%;
+    padding: 18px;
+    background-color: rgba(251, 249, 249, 0.5);
+    margin-bottom: 12px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    border-bottom: 3px solid #9f9f9f;
+    font-size: 20px;
+}
+
+
+input[type=submit]{
+    background-color: rgba(91, 200, 116, 0.363);
+    width: 200px;
+}
+input[type=submit]:hover{
+    background-color: rgba(56, 144, 77, 0.363);
+    cursor: pointer;
+}
+
+
+
+
 
