@@ -15,7 +15,7 @@ app.config['SECRET_KEY'] = "this_is_secret"
 app.config['FLASK_ADMIN_SWATCH'] = "cerulean"
 
 admin = Admin(app, name='CV Generator', template_mode='bootstrap4')
-#  sqlachemy
+#  SQLAlchemy
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -34,6 +34,7 @@ class UserView(ModelView):
 
 admin.add_link(MenuLink(name='Live site', url='/'))
 admin.add_view(UserView(User, db.session))
+
 
 class CreateResume(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
@@ -61,35 +62,41 @@ class CreateResume(FlaskForm):
 def index():
     return render_template("index.html")
 
-@app.route("/generate_cv")
-def generate_cv():
 
+@app.route("/generate_cv", methods=["GET", "POST"])
+def generate_cv():
     form = CreateResume()
+    if form.validate_on_submit():  # if form is filled correctly
+        # hash password
+        form.password.data = generate_password_hash(form.password.data)
+
+        user = User(
+            name=form.name.data,
+            surname=form.surname.data,
+            email=form.email.data,
+            password=form.password.data
+            # აქ გაგრძელება შეიძლება/უნდა
+        )  # crete user object
+        db.session.add(user)
+        db.session.commit()  # save user object to db
+        return redirect(url_for("preview"))
+    print(form.errors)  # print errors in console for debugging
     return render_template("generate_cv.html", form=form)
+
 
 @app.route("/experience")
 def experience():
-    form = CreateResume()  # TODO: why is this here?
-    args = request.args
-
-    hash_pass = generate_password_hash(args['password'])
-
-    user = User(name=args['name'], surname=args['surname'], email=args['email'], password=hash_pass)
-    db.session.add(user)
-    db.session.commit()
-
     # redirect to preview
     return redirect(url_for("preview"))
+
 
 @app.route("/preview")
 def preview():
     return render_template("preview.html")
 
- 
+
 if __name__ == '__main__':
     # with app.app_context():
     #     db.create_all()
     #     print(f"db created: {db.engine.url}")
     app.run(debug=True)
-
-
