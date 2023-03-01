@@ -2,6 +2,7 @@
 {% block body %}
 
 <h2> Personal Information </h2>
+
 {% if form.errors %}
     <ul class="errors">
     {% for error in form.errors.values() %}
@@ -9,6 +10,7 @@
     {% endfor %}
     </ul>
 {% endif %}
+
 <form action="{{url_for('generate_cv')}}"  method="post">
     {{ form.hidden_tag() }}
     {{ form.name(placeholder="Name", value="John") }}
